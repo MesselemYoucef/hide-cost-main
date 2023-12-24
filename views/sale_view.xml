@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+<!--Sales form-->
+    <record id="sale_order_view_inherited" model="ir.ui.view">
+        <field name="name">customer.sale.order.view.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
+        <field name="priority">1001</field>
+        <field name="arch" type="xml">
+            <!--            Creating a cost allowed field then hiding it-->
+            <xpath expr="//field[@name='product_template_id']" position="before">
+                <field name="hide_cost"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='hide_cost']" position="attributes">
+               <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_template_id']" position="after">
+                <field name="is_powermax_product"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='is_powermax_product']" position="attributes">
+               <attribute name="column_invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/tree//field[@name='purchase_price']" position="attributes">
+                <attribute name="invisible">hide_cost and is_powermax_product</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='margin']" position="attributes">
+                <attribute name="invisible">hide_cost and is_powermax_product</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/tree//field[@name='margin_percent']"
+                   invisible="'hide_cost' == True" position="attributes">
+                <attribute name="invisible">hide_cost and is_powermax_product</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+
+<!--Order Lines-->
+    <record id="sale_margin_sale_order_inherited" model="ir.ui.view">
+        <field name="name">sale.margin.sale.order.inherited</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+        <field name="priority">1001</field>
+        <field name="arch" type="xml">
+<!--                        Creating a cost allowed field then hiding it-->
+            <xpath expr="//field[@name='margin_percent']" position="after">
+                <field name="hide_cost"/>
+            </xpath>
+
+            <xpath expr="//field[@name='hide_cost']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='margin']" position="attributes">
+                <attribute name="invisible">hide_cost </attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="invisible">hide_cost</attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin_percent']" position="attributes">
+                <attribute name="invisible">hide_cost</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

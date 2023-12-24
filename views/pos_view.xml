@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+
+<!--POS Order Lines-->
+    <record id="pos_orderline_form_inherited" model="ir.ui.view">
+        <field name="name">pos.orderline.form.inherited</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="priority">1001</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='total_cost']" position="after">
+               <field name="hide_cost"/>
+            </xpath>
+            <xpath expr="//field[@name='hide_cost']" position="attributes">
+               <attribute name="column_invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='qty']" position="after">
+                <field name="is_powermax_product"/>
+            </xpath>
+            <xpath expr="//field[@name='is_powermax_product']" position="attributes">
+               <attribute name="column_invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='total_cost']" position="attributes">
+                <attribute name="invisible">hide_cost and is_powermax_product</attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="invisible">hide_cost and is_powermax_product</attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin_percent']"
+                   invisible="'hide_cost' == True" position="attributes">
+                <attribute name="invisible">hide_cost and is_powermax_product</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+<!--POS Order    -->
+    <record id="pos_pos_margin_sale_order_inherited" model="ir.ui.view">
+        <field name="name">pos.pos.margin.sale.order.inherited</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="priority">1001</field>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hide_cost"/>
+            </xpath>
+
+            <xpath expr="//field[@name='hide_cost']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+<!--            <xpath expr="//label[@for='margin']" position="attributes">-->
+<!--                <attribute name="invisible">hide_cost</attribute>-->
+<!--            </xpath>-->
+            <xpath expr="//field[@name='margin']" position="attributes">
+                <attribute name="invisible">hide_cost</attribute>
+            </xpath>
+            <xpath expr="//field[@name='margin_percent']" position="attributes">
+                <attribute name="invisible">hide_cost</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
