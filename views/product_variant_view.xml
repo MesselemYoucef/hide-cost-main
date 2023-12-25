@@ -29,10 +29,10 @@
         <field name="inherit_id" ref="product.product_product_tree_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='lst_price']" position="before">
-                <field name="hide_cost" />
+                <field name="hide_cost" column_invisible="True"/>
             </xpath>
             <xpath expr="//field[@name='lst_price']" position="after">
-                <field name="is_powermax_product" />
+                <field name="is_powermax_product" column_invisible="True"/>
             </xpath>
             <xpath expr="//field[@name='standard_price']" position="attributes">
                 <attribute name="invisible">hide_cost and is_powermax_product</attribute>
