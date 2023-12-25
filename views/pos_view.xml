@@ -9,19 +9,17 @@
         <field name="priority">1001</field>
         <field name="arch" type="xml">
 
-            <xpath expr="//field[@name='partner_id']" position="after">
-               <field name="hide_cost" invisible="True"/>
-            </xpath>
-
+<!--            Set the hide_cost variable check for the total margin line and total margin percentage line-->
             <xpath expr="//field[@name='lines']/tree//field[@name='total_cost']" position="after">
-               <field name="hide_cost" column_invisible="True"/>
+                <field name="hide_cost" column_invisible="True"/>
             </xpath>
 
+<!--             Check if the product is powermax-->
             <xpath expr="//field[@name='lines']/tree//field[@name='qty']" position="after">
                 <field name="is_powermax_product" column_invisible="True"/>
             </xpath>
 
-
+<!--            Hide the total margin line and total margin percentage line and total cost line from users with no previlige-->
             <xpath expr="//field[@name='lines']/tree//field[@name='total_cost']" position="attributes">
                 <attribute name="invisible">hide_cost</attribute>
             </xpath>
@@ -31,16 +29,22 @@
             <xpath expr="//field[@name='lines']/tree//field[@name='margin_percent']" position="attributes">
                 <attribute name="invisible">hide_cost</attribute>
             </xpath>
+
+<!--            Set the hide_cost variable check for the total margin and total margin percentage-->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="hide_cost" invisible="True"/>
+            </xpath>
+
+<!--            Hide the total margin and total margin percentage from users with no previlige-->
             <xpath expr="//label[@for='margin']" position="attributes">
                 <attribute name="invisible">hide_cost</attribute>
             </xpath>
             <xpath expr="//group[@name='order_total']//field[@name='margin']" position="attributes">
                 <attribute name="invisible">hide_cost</attribute>
             </xpath>
-             <xpath expr="//group[@name='order_total']//field[@name='margin_percent']" position="attributes">
+            <xpath expr="//group[@name='order_total']//field[@name='margin_percent']" position="attributes">
                 <attribute name="invisible">hide_cost</attribute>
             </xpath>
         </field>
     </record>
-
 </odoo>

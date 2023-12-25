@@ -4,10 +4,10 @@ from odoo import api, fields, models
 class ProductVariantCostHide(models.Model):
     _inherit = "product.product"
 
+    # Variable to check if the user has the previlige to see the product cost or not
     hide_cost = fields.Boolean(string="Cost Should Be Hidden", compute="_check_user_cost_privilege")
-    # product_template_id = fields.Many2one('product.template', required=True, string="Product Template ID")
-    # is_powermax_product = fields.Boolean(string='Is Powermax Product', related='product_template_id.is_powermax_product')
 
+    # function to calculate if the user has the previlige to see the product cost or not
     @api.depends("name")
     def _check_user_cost_privilege(self):
         for record in self:

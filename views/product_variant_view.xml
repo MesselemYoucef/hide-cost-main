@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+<!--    Form View-->
     <record id="view_product_variant_inherited_form" model="ir.ui.view">
         <field name="name">view.product.variant.inherited</field>
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
+
+<!--            Place the hide cost previlige check and hide it as well-->
             <xpath expr="//field[@name='detailed_type']" position="before">
-                <field name="hide_cost" />
+                <field name="hide_cost" invisible = "True"/>
             </xpath>
-            <xpath expr="//field[@name='hide_cost']" position="attributes">
-                <attribute name="invisible">hide_cost</attribute>
-            </xpath>
+<!--            Place is powermax product and hide it from the users with no previlige view-->
             <xpath expr="//field[@name='detailed_type']" position="after">
                 <field name="is_powermax_product" />
             </xpath>
+<!--            hide the booklean is_powermax_product variable from users who have no previlige-->
             <xpath expr="//field[@name='is_powermax_product']" position="attributes">
                 <attribute name="invisible">hide_cost</attribute>
             </xpath>
-
+<!--            hide the cost from users with no previlige-->
             <xpath expr="//field[@name='standard_price']" position="attributes">
                 <attribute name="invisible">hide_cost and is_powermax_product</attribute>
             </xpath>
         </field>
     </record>
+
+<!--    Tree View-->
         <record id="view_product_variant_inherited_tree" model="ir.ui.view">
         <field name="name">view.product.variant.inherited.tree</field>
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_product_tree_view"/>
         <field name="arch" type="xml">
+<!--            place the hide_cost variable and page is invisible-->
             <xpath expr="//field[@name='lst_price']" position="before">
                 <field name="hide_cost" column_invisible="True"/>
             </xpath>
+<!--            place is_powermax_product variable and make it invisible-->
             <xpath expr="//field[@name='lst_price']" position="after">
                 <field name="is_powermax_product" column_invisible="True"/>
             </xpath>
+<!--            hide the cost from users with no previlige-->
             <xpath expr="//field[@name='standard_price']" position="attributes">
                 <attribute name="invisible">hide_cost and is_powermax_product</attribute>
             </xpath>
